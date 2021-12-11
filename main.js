@@ -68,12 +68,21 @@ function updateBallPosition() {
   if(ball.y + ball.height / 2 >= Game.height) {
     alert("You lost! Press F5 to try again")
   }
+
+  //Това забравихме да го направим - без него играта ни има сериозен бъг
+  if(ball.y - ball.width /2 < 0 && direction.y < 0) {
+    direction.y = direction.y * -1;
+  }
 }
 
 function generateRandomDirection() {
   x = Game.rnd.integerInRange(-10, 10);
   y = Game.rnd.integerInRange(-10, 10);
-  //изклюване на стойност 0 за y и x
+  //изклюване на стойност 0 за y и x (това също пропуснахме да го направим)
+  for(;x == 0 || y == 0;) {
+    x = Game.rnd.integerInRange(-10, 10);
+    y = Game.rnd.integerInRange(-10, 10);
+  }
   direction = new Phaser.Point(x, y);
   direction.normalize();
 }
